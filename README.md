@@ -1,4 +1,4 @@
-# NLP_Project_AI_Rewriting_Assistant
+# AI-Driven Email Tone Modifier
 
 ## Project Overview
 Our project aims to build an AI-powered assistant that rewrites emails in different tones (formal, casual, persuasive, apologetic, assertive) while preserving the original meaning. We are leveraging transformer-based models (T5, GPT-4) to enable automatic tone adaptation, enhancing communication effectiveness.
