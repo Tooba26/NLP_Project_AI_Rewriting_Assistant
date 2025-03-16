@@ -4,16 +4,21 @@
 Our project aims to build an AI-powered assistant that rewrites emails in different tones (formal, casual, persuasive, apologetic, assertive) while preserving the original meaning. We are leveraging transformer-based models (T5, GPT-4) to enable automatic tone adaptation, enhancing communication effectiveness.
 
 ## 1. Data Collection & Preprocessing
+
 🔹 Datasets Chosen:
 
 Enron Email Dataset (Business Emails - Formal, Casual, Persuasive)
+
 Hillary Clinton Email Dataset (Diplomatic & Formal Emails)
+
 Customer Service Email Dataset (Apologetic & Persuasive Emails)
+
 🔹 Preprocessing Steps Completed:
-✔ Removed email metadata (headers, timestamps, signatures)
-✔ Normalized text (lowercasing, punctuation removal, contraction expansion)
-✔ Tokenized the content for processing
-✔ Merged all datasets into a unified preprocessed dataset
+
+- Removed email metadata (headers, timestamps, signatures)
+- Normalized text (lowercasing, punctuation removal, contraction expansion)
+- Tokenized the content for processing
+- Merged all datasets into a unified preprocessed dataset
 
 ## 2. Model Development
 🔹 Baseline Model:
