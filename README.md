@@ -4,19 +4,15 @@
 Our project aims to build an AI-powered assistant that rewrites emails in different tones (formal, casual, persuasive, apologetic, assertive) while preserving the original meaning. We are leveraging transformer-based models (T5, GPT-4) to enable automatic tone adaptation, enhancing communication effectiveness.
 
 ## 1. Data Collection & Preprocessing
-
-🔹 Datasets Chosen:
-
-- Enron Email Dataset (Business Emails - Formal, Casual, Persuasive)
-- Hillary Clinton Email Dataset (Diplomatic & Formal Emails)
-- Customer Service Email Dataset (Apologetic & Persuasive Emails)
-
-🔹 Preprocessing Steps Completed:
-
-- Removed email metadata (headers, timestamps, signatures)
-- Normalized text (lowercasing, punctuation removal, contraction expansion)
-- Tokenized the content for processing
-- Merged all datasets into a unified preprocessed dataset
+- We intended to use the GYAFC dataset for this project and initiated the required approval process through Yahoo. After receiving the necessary authorization, we contacted the dataset authors via the email provided on their GitHub repository and forwarded the approval confirmation. However, we have not received any response from them to date.
+- Then, We began by selecting two subsets from the Enron email dataset: one consisting of 1,000 general email sentences and another containing 5,000 shorter sentences, each ranging between 5 to 25 words in length.
+- The email content was filtered to retain only the main message body, removing components such as headers, sender and receiver names, timestamps, and any other metadata not relevant to the message content.
+- The remaining text underwent a cleaning process where unnecessary symbols were removed, all characters were converted to lowercase, and the content was standardized to ensure consistency and readability.
+- In addition to the Enron data, a manually curated dataset of 1,000 sentence pairs was created. Each pair reflected a realistic transformation between an informal and a formal sentence, representative of tone differences commonly found in email communication.
+- After cleaning, the three datasets were combined into a single dataset intended for model training.
+- The initial combined dataset contained 6,893 rows and two columns, corresponding to informal and formal sentence pairs.
+- A check for missing values confirmed there were none; however, duplicate entries were identified and removed, resulting in a final dataset size of 6,571 unique records.
+- As a final preprocessing step, newline characters were eliminated, remaining special characters were removed, and the overall structure and format of the text were verified to ensure the dataset was clean and suitable for training.
 
 ## 2. Model Development
 🔹 Baseline Model:
@@ -33,6 +29,7 @@ This baseline serves as a reference point for assessing the capabilities and lim
 
 ## 3. Model Training & Fine-Tuning
 🔹 **Training Process of Baseline Model:**
+
 **- Model Initialization**
 The Seq2Seq model was constructed using an LSTM-based encoder and decoder. The encoder and decoder each received their own embedding layers initialized randomly. The encoder processed the input sequence to generate a context vector, which was then used by the decoder to generate the output sequence token by token. The input and output vocabulary sizes were determined from the training data.
 
@@ -76,6 +73,10 @@ At the end of each epoch, the training loss was printed to monitor convergence.
 - ROUGE Score - Evaluates text overlap with reference emails
 
 **Baseline Model Evaluation**
+
+To evaluate the effect of different hyperparameter configurations on the performance of the baseline Seq2Seq model, several experiments were conducted by varying the number of LSTM layers, embedding dimension, and hidden size. The aim was to identify whether deeper models or larger embedding representations could improve the model's ability to convert informal emails into formal ones.
+
+Despite the changes, the model's performance remained relatively low across all configurations, indicating the architectural limitations of LSTM-based Seq2Seq models for this task. The BLEU and ROUGE scores showed slight improvements with higher dimensions and 2–4 layers, but exact match accuracy remained 0.0 throughout, reflecting the model's inability to generate outputs that closely matched the reference formal sentences.
 ### 📈 Baseline Model
 
 | Model              | BLEU Score | ROUGE-1 | ROUGE-2 | ROUGE-L | Exact Match |
