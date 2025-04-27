@@ -25,7 +25,20 @@ This baseline serves as a reference point for assessing the capabilities and lim
 
 🔹 Transformer-Based Models Selected:
 - T5 (Text-to-Text Transfer Transformer) Fine-Tuning
-- GPT-4 Fine-Tuning for Email Tone Adaptation
+- Fine-tuning T5 for informal emaill conversion to formal emails.
+Tone Transformations Handled:
+
+Informal → Formal
+
+Formal → Informal
+
+Apologetic → Formal
+
+Apologetic → Informal
+
+Informal → Apologetic
+
+Formal → Apologetic
 
 ## 3. Model Training & Fine-Tuning
 🔹 **Training Process of Baseline Model:**
@@ -40,33 +53,35 @@ The embedding dimension was set to 128, and the hidden state dimension of the LS
 The model was trained using the CrossEntropyLoss, with the ignore_index parameter set to the padding token index in order to exclude padding tokens from contributing to the loss. The Adam optimizer was used to update the model parameters.
 
 **- Training Loop**
-The model was trained for 100 epochs. During each epoch:
-
-The model was set to training mode.
-
-For each batch in the training dataset:
-
-Input (src) and target (trg) sequences were moved to the appropriate device (CPU/GPU).
-
+The model was trained for 100 epochs. During each epoch the model was set to training mode.
+For each batch in the training dataset, Input (src) and target (trg) sequences were moved to the appropriate device (CPU/GPU).
 Gradients were reset using optimizer.zero_grad().
-
 The model made predictions on the input sequence with the target sequence provided as input for teacher forcing.
-
 The output sequence (excluding the first token, typically <sos>) was reshaped for compatibility with the loss function.
-
-The target sequence was similarly reshaped.
-
-The loss was computed and backpropagated.
-
+The target sequence was similarly reshaped. The loss was computed and backpropagated.
 The optimizer updated the model weights.
-
 Batch loss was accumulated to compute epoch-level loss.
-
 At the end of each epoch, the training loss was printed to monitor convergence.
 
-**Next Step**
-- Fine-tuning T5 for informal emaill conversion to formal emails.
+**Training of Fine-tuned T5 model**
 
+Base Model: t5-base from HuggingFace.
+
+Optimizer: AdamW
+
+Learning Rate: 5e-5
+
+Batch Size: 8
+
+Training Setup:
+
+Early stopping enabled based on validation loss.
+
+Teacher forcing used during training.
+
+Total epochs were 50 with early stopping based on tone transformation type.
+
+The models were then pushed to HuggingFace models.
 
 ## 4. Evaluation Metrics Defined
 - BLEU Score - Measures similarity to human-written emails
@@ -94,6 +109,37 @@ Despite the changes, the model's performance remained relatively low across all 
 | 256           | 512        | 2           | 0.1064     | 0.2512  | 0.1618  | 0.2399  | 0.0          |
 | 256           | 512        | 4           | 0.0991     | 0.2467  | 0.1562  | 0.2345  | 0.0          |
 | 256           | 512        | 8           | 0.0827     | 0.2195  | 0.1377  | 0.2102  | 0.0          |
+
+### T5 model Performance
+## 📊 Model Performance Summary
+
+| Tone Transformation         | BLEU Score | ROUGE-1 | ROUGE-2 | ROUGE-L |
+|------------------------------|------------|---------|---------|---------|
+| Informal → Formal            | 0.8898     | 0.9482  | 0.9236  | 0.9482  |
+| Apologetic → Informal        | 0.8874     | 0.9474  | 0.9256  | 0.9474  |
+| Apologetic → Formal          | **0.9865** | **0.9992** | **0.9992** | **0.9992** |
+| Informal → Apologetic        | 0.6437     | 0.7131  | 0.6517  | 0.7130  |
+| Formal → Apologetic          | 0.6585     | 0.7213  | 0.6635  | 0.7211  |
+
+
+
+## 6. Key Observations
+High Structural and Semantic Fidelity: The T5 model maintained the original intent while adjusting the tone.
+
+Stronger Formalization: Formalization tasks (apologetic → formal) showed better results than emotional tone generation tasks.
+
+Training Convergence: Loss curves showed consistent convergence without overfitting across all transformations.
+
+## 7. Future Work
+Explore T5-large or Flan-T5 models for improved performance.
+
+Implement emotion conditioning to better handle nuanced emotional tones (e.g., apologetic, empathetic).
+
+Extend tone options to assertive, persuasive, and empathetic styles.
+
+Introduce affective computing modules for enhanced emotional tone detection and generation.
+
+
 
 
 
