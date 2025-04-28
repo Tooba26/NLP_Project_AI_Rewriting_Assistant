@@ -1,0 +1,6 @@
+streamlit
+transformers
+torch
+tokenizers 
+sentencepiece
+protobuf
