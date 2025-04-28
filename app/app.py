@@ -1,16 +1,52 @@
+# import streamlit as st
+# from transformers import T5ForConditionalGeneration, T5Tokenizer
+
+# # Load the model and tokenizer
+# @st.cache_resource
+# def load_model():
+#     model = T5ForConditionalGeneration.from_pretrained("email_tone_rewrite")
+#     tokenizer = T5Tokenizer.from_pretrained("email_tone_rewrite")
+#     return model, tokenizer
+
+# model, tokenizer = load_model()
+
+# # Title
+# st.title("Email Formalizer")
+# st.write("Convert informal emails to formal ones with professional header and footer.")
+
+# # Input
+# informal_text = st.text_area("Enter Informal Email Body:", height=200)
+
+# # Button
+# if st.button("Convert to Formal Email"):
+#     if informal_text.strip():
+#         input_text = "Informal: " + informal_text.strip()
+#         inputs = tokenizer.encode(input_text, return_tensors="pt", truncation=True, max_length=512)
+#         outputs = model.generate(inputs, max_length=512, num_beams=5, early_stopping=True)
+#         formal_body = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+#         # Professional header and footer
+#         header = "Dear [Recipient],\n\n"
+#         footer = "\n\nBest regards,\n[Your Name]"
+
+#         formal_email = header + formal_body + footer
+#         st.subheader("Formal Email Output:")
+#         st.text_area("Formal Email", formal_email, height=300)
+#     else:
+#         st.warning("Please enter an email body.")
+
 import streamlit as st
 from transformers import T5ForConditionalGeneration, T5Tokenizer
 
+# Mapping of label → directory
 MODEL_DIRS = {
-    "Informal to Formal (Default Model)": "ToobiBabe/email_tone_rewrite",
-    "Formal to Informal": "ToobiBabe/formal_informal_rewriter",
-    "Informal to Apologetic": "ToobiBabe/apologetic_email_rewriter",
-    "Formal to Apologetic": "ToobiBabe/formal_apologetic_rewriter",
-    "Apologetic to Formal": "ToobiBabe/apologetic_formal_rewriter",
-    "Apologetic to Informal": "ToobiBabe/apologetic_informal_rewrite"
+    "Informal to Formal (Default Model)": "email_tone_rewrite",  # your original one
+    "Formal to Informal": "formal_informal_rewriter",
+    "Informal to Apologetic": "apologetic_email_rewriter",
+    "Formal to Apologetic": "formal_apologetic_rewriter",
+    "Apologetic to Formal": "apologetic_formal_rewriter",
+    "Apologetic to Informal":"apologetic_informal_rewrite"
 }
-
-
 
 # Cache models/tokenizers
 @st.cache_resource
