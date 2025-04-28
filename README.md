@@ -122,6 +122,11 @@ Despite the changes, the model's performance remained relatively low across all 
 | Formal → Apologetic          | 0.6585     | 0.7213  | 0.6635  | 0.7211  |
 
 
+## 5. Deployment
+The models were loaded to HuggingFace to access for web app. The web app has been deployed on Streamlit. 
+Can be accessed through following link:
+
+https://email-tone-rewriter.streamlit.app
 
 ## 6. Key Observations
 High Structural and Semantic Fidelity: The T5 model maintained the original intent while adjusting the tone.
